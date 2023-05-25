@@ -1,12 +1,14 @@
+
 import { defineStore } from 'pinia';
+import { chats, Chat } from '../chats';
 
 export const useChatStore = defineStore('chat', {
   state: () => ({
-    messages: [
-      { id: 1, author: 'Alice', content: 'Hello' },
-      { id: 2, author: 'Bob', content: 'Hi' },
-      { id: 3, author: 'Alice', content: 'How are you?' },
-      { id: 4, author: 'Bob', content: 'I am good, thanks!' },
-    ],
+    chatData: chats,
   }),
+  getters: {
+    getChats(): Chat[] {
+      return this.chatData;
+    },
+  },
 });

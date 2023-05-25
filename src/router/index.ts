@@ -26,9 +26,10 @@ const router = createRouter({
       component: register
     },
     {
-      path: '/chat/:chatName',
+      path: '/chat/:id',
       name: 'Chat',
-      component: chatPage, // Replace with your actual chat component
+      component: chatPage,
+      props:true // Replace with your actual chat component
     },
 
 

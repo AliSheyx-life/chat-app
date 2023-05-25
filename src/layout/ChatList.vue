@@ -29,36 +29,23 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
+import { useChatStore } from "../store";
+import { Chat } from "../chats";
 
+const chatStore = useChatStore();
 const router = useRouter();
-const chats = ref([
-  {
-    name: "John Doe",
-    avatar: "john-doe-avatar.jpg",
-    lastMessage: "Hello there!",
-  },
-  {
-    name: "Jane Smith",
-    avatar: "jane-smith-avatar.jpg",
-    lastMessage: "How are you?",
-  },
-  {
-    name: "Alice Johnson",
-    avatar: "alice-johnson-avatar.jpg",
-    lastMessage: "See you later!",
-  },
-]);
-
+const chats: Chat[] = chatStore.getChats;
+console.log(chats);
 const searchText = ref("");
 
 const filteredChats = computed(() => {
   const searchLowerCase = searchText.value.toLowerCase();
-  return chats.value.filter((chat) =>
+  return chats.filter((chat: any) =>
     chat.name.toLowerCase().includes(searchLowerCase)
   );
 });
 
 const selectChat = (chat: any) => {
-  router.push(`/chat/${chat.name}`);
+  router.push(`/chat/${chat.id}`);
 };
 </script>
