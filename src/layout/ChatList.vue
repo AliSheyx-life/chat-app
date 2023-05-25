@@ -13,6 +13,7 @@
         :key="index"
         :chat="chat"
         @click="selectChat(chat)"
+        class="shadow-sm mt-4 pt-3 pb-3"
       >
         <v-list-item-avatar>
           <v-img :src="chat.avatar" :alt="chat.name"></v-img>

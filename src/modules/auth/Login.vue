@@ -1,31 +1,29 @@
 <template>
   <div class="login-page h-full min-h-screen flex justify-center items-center">
-    <div width="400" class="">
-      <h2 class="text-3xl mb-8 text-center font-bold text-gray-500">Login</h2>
-      <form @submit.prevent="signIn">
-        <input
-          type="text"
+    <v-sheet width="400" class="">
+      <h2 class="text-3xl mb-8 text-center font-bold text-gray">Login</h2>
+      <v-form fast-fail @submit.prevent>
+        <v-text-field
           v-model="username"
-          placeholder="username"
-          class="border"
-        />
-        <input
-          type="text"
+          label="Name"
+          :rules="usernameRules"
+        ></v-text-field>
+
+        <v-text-field
           v-model="password"
-          placeholder="password"
-          class="border"
-        />
-        <button type="submit" class="bg-green-500">Login</button>
-      </form>
-      <p class="mt-3" v-if="true">
-        Do'nt have account?
-        <span
-          class="text-brand font-semibold cursor-pointer"
-          @click="router.push({ name: 'register' })"
+          label="Password "
+          :rules="passwordRules"
+        ></v-text-field>
+
+        <v-btn type="submit" block class="mt-2">Submit</v-btn>
+      </v-form>
+      <p class="mt-[19px]">
+        Have already an account
+        <span class="font-bold cursor-pointer text-brand" @click="moveLogin"
           >Sign Up</span
         >
       </p>
-    </div>
+    </v-sheet>
   </div>
 </template>
 
@@ -35,28 +33,23 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const username = ref("");
-const password = ref("");
-
-const signIn = () => {
-  console.log("login");
+const moveLogin = () => {
+  router.push("/register");
 };
-</script>
+const usernameRules = [
+  (value: any) => {
+    if (value?.length > 3) return true;
 
-<style scoped>
-form {
-  display: block;
-}
-input {
-  border: 1px solid black;
-  display: block;
-  margin: 10px 0;
-  width: 100%;
-}
-button {
-  background-color: black;
-  color: #fff;
-  padding: 10px;
-  cursor: pointer;
-  display: inline-block;
-}
-</style>
+    return "First name must be at least 3 characters.";
+  },
+];
+
+const password = ref("");
+const passwordRules = [
+  (value: any) => {
+    if (/[^0-9]/.test(value)) return true;
+
+    return "Password should contain 8 digits.";
+  },
+];
+</script>

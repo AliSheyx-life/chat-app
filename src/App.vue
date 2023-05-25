@@ -7,10 +7,14 @@
 
 <script setup lang="ts">
 import MainLayout from "./layout/MainLayout.vue";
+import { useChatStore } from "./store";
 
 components: {
   MainLayout;
 }
 
-const hasLayout = false;
+const chatStore = useChatStore();
+
+const hasLayout = chatStore.hasLayout;
+console.log(hasLayout);
 </script>

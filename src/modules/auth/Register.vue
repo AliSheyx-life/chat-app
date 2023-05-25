@@ -2,17 +2,11 @@
   <div class="login-page h-full min-h-screen flex justify-center items-center">
     <v-sheet width="400" class="">
       <h2 class="text-3xl mb-8 text-center font-bold text-gray">Register</h2>
-      <v-form fast-fail @submit.prevent>
+      <v-form fast-fail @submit.prevent="registerForm">
         <v-text-field
           v-model="username"
-          label="Username"
+          label="Name"
           :rules="usernameRules"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="email"
-          label="Email"
-          :rules="emailRules"
         ></v-text-field>
 
         <v-text-field
@@ -36,6 +30,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useChatStore } from "../../store";
+import { Chat } from "../../chats";
 
 const router = useRouter();
 const username = ref("");
@@ -49,14 +45,7 @@ const usernameRules = [
     return "First name must be at least 3 characters.";
   },
 ];
-const email = ref("");
-const emailRules = [
-  (value: any) => {
-    if (value?.length > 3) return true;
 
-    return "Email should contain at least 3 chars.";
-  },
-];
 const password = ref("");
 const passwordRules = [
   (value: any) => {
@@ -65,4 +54,20 @@ const passwordRules = [
     return "Password should contain 8 digits.";
   },
 ];
+
+const registerForm = () => {
+  let chatStore = useChatStore();
+  const newUser = <Chat>{
+    id: 10,
+    name: username.value,
+    avatar: "",
+    lastMessage: "",
+    messages: [],
+    password: password.value,
+  };
+  chatStore.changeHasLayout;
+  chatStore.addCurrentUser(newUser);
+  router.push("/chat/2");
+};
+// chatStore.currentUser = newUser;
 </script>
